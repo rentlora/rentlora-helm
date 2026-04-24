@@ -1,8 +1,8 @@
-# ── Base values (shared defaults) ─────────────────────────────────────────────
+﻿# â”€â”€ Base values (shared defaults) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 replicaCount: 1
 
 image:
-  repository: ghcr.io/rentlora/rentlora-user-service
+  repository: iyask/rentlora-user-service
   tag: "latest"          # overridden per environment by CI/CD
   pullPolicy: IfNotPresent
 
@@ -43,6 +43,7 @@ config:
   mongoDbName: "rentlora"
   logLevel: "INFO"
 
-# Secret values — populated by CI/CD via helm --set, never hardcoded here
+# Secret values â€” populated by CI/CD via helm --set, never hardcoded here
 secrets:
   mongoUrl: ""    # full mongodb connection string incl. password
+

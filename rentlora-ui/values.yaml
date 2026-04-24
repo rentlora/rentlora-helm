@@ -1,7 +1,7 @@
-replicaCount: 1
+﻿replicaCount: 1
 
 image:
-  repository: ghcr.io/rentlora/rentlora-ui
+  repository: iyask/rentlora-ui
   tag: "latest"
   pullPolicy: IfNotPresent
 
@@ -35,7 +35,8 @@ hpa:
   maxReplicas: 2
   targetCPUUtilizationPercentage: 80
 
-# UI is a static nginx container — it does NOT need API URLs in its Helm config.
+# UI is a static nginx container â€” it does NOT need API URLs in its Helm config.
 # All API traffic is routed through KGateway via path-based routing.
 # The UI build-time env vars (VITE_*) are baked in during the Docker build via
 # the CI/CD pipeline using --build-arg, NOT via Kubernetes config.
+
