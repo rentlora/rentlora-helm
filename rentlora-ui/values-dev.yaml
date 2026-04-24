@@ -1,4 +1,11 @@
-﻿image:
-  tag: "sha-latest"
+# image.tag is managed by the CI/CD pipeline via GitOps.
+# The pipeline runs: yq e '.image.tag = "sha-<commit>"' -i helm/<service>/values-dev.yaml
+# then commits and pushes the file. ArgoCD detects the Git change and syncs.
+# Never edit this value manually.
+image:
+  tag: "sha-d3bde68"
 service:
   type: ClusterIP
+replicaCount: 1
+hpa:
+  enabled: false

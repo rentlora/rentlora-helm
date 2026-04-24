@@ -1,10 +1,13 @@
-﻿image:
-  tag: "sha-latest"
+# ── Dev overrides ─────────────────────────────────────────────────────────────
+# image.tag is set dynamically by CI/CD:  sha-<7-char-sha>
+image:
+  tag: "sha-eeee9f7"
 service:
   type: ClusterIP
+replicaCount: 1
 config:
   mongoHost: "mongodb.dev.svc.cluster.local"
   mongoDbName: "rentlora_dev"
   logLevel: "DEBUG"
 hpa:
-  enabled: false
+  enabled: false # No HPA in dev to save resources
