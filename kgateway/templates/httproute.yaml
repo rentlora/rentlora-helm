@@ -1,0 +1,83 @@
+---
+# ── API Routes ────────────────────────────────────────────────────────────────
+# No cross-namespace reference needed — gateway and routes are in the same namespace.
+# hostname is optional: set it in values-prod.yaml for a real domain.
+# In dev it can be omitted (gateway accepts all hostnames → access via IP is fine).
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: rentlora-api-routes
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: rentlora-gateway     # same namespace — no namespace field needed
+  {{- if .Values.hostname }}
+  hostnames:
+    - {{ .Values.hostname | quote }}
+  {{- end }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/users
+      backendRefs:
+        - name: {{ .Values.services.user.name }}
+          port: {{ .Values.services.user.port }}
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/properties
+      backendRefs:
+        - name: {{ .Values.services.property.name }}
+          port: {{ .Values.services.property.port }}
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/bookings
+      backendRefs:
+        - name: {{ .Values.services.booking.name }}
+          port: {{ .Values.services.booking.port }}
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/payments
+      backendRefs:
+        - name: {{ .Values.services.payment.name }}
+          port: {{ .Values.services.payment.port }}
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/ai
+      backendRefs:
+        - name: {{ .Values.services.ai.name }}
+          port: {{ .Values.services.ai.port }}
+---
+# ── UI Catch-all ──────────────────────────────────────────────────────────────
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: rentlora-ui-route
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: rentlora-gateway
+  {{- if .Values.hostname }}
+  hostnames:
+    - {{ .Values.hostname | quote }}
+  {{- end }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: {{ .Values.services.ui.name }}
+          port: {{ .Values.services.ui.port }}

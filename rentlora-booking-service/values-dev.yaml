@@ -1,0 +1,9 @@
+image:
+  tag: "sha-latest"
+replicaCount: 1
+config:
+  mongoHost: "mongodb.dev.svc.cluster.local"
+  mongoDbName: "rentlora_dev"
+  logLevel: "DEBUG"
+hpa:
+  enabled: false

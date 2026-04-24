@@ -1,0 +1,30 @@
+# ── Gateway config ────────────────────────────────────────────────────────────
+gateway:
+  className: kgateway
+  httpPort: 80
+
+# hostname is optional.
+# Omit for dev (gateway accepts all hostnames — access via EC2 IP works fine).
+# Set for prod (your real domain e.g. rentlora.com).
+hostname: ""
+
+# ── Backend service names + ports ─────────────────────────────────────────────
+services:
+  ui:
+    name: rentlora-ui
+    port: 80
+  user:
+    name: rentlora-user-service
+    port: 8001
+  property:
+    name: rentlora-property-service
+    port: 8002
+  booking:
+    name: rentlora-booking-service
+    port: 8003
+  payment:
+    name: rentlora-payment-service
+    port: 8004
+  ai:
+    name: rentlora-ai-service
+    port: 8005

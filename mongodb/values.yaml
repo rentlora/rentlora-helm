@@ -1,0 +1,23 @@
+replicaCount: 1    # Single replica — data lives on NFS PVC
+
+image:
+  repository: mongo
+  tag: "7.0"
+  pullPolicy: IfNotPresent
+
+service:
+  port: 27017
+
+# NFS StorageClass — provide your NFS provisioner class name here
+# You said you'll provide details later; placeholder set here
+persistence:
+  storageClass: "nfs-storage"   # ← replace with your actual NFS StorageClass name
+  size: "10Gi"
+
+# MongoDB root credentials — injected by CI/CD, never hardcoded
+secrets:
+  mongoRootUsername: ""
+  mongoRootPassword: ""
+
+config:
+  dbName: "rentlora"

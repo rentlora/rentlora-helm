@@ -1,0 +1,48 @@
+# ── Base values (shared defaults) ─────────────────────────────────────────────
+replicaCount: 1
+
+image:
+  repository: ghcr.io/rentlora/rentlora-user-service
+  tag: "latest"          # overridden per environment by CI/CD
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8001
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+probes:
+  liveness:
+    path: /health
+    initialDelaySeconds: 15
+    periodSeconds: 20
+    failureThreshold: 3
+  readiness:
+    path: /health
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    failureThreshold: 3
+
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 70
+
+# Non-sensitive config (goes into ConfigMap)
+config:
+  mongoHost: "mongodb"
+  mongoPort: "27017"
+  mongoDbName: "rentlora"
+  logLevel: "INFO"
+
+# Secret values — populated by CI/CD via helm --set, never hardcoded here
+secrets:
+  mongoUrl: ""    # full mongodb connection string incl. password

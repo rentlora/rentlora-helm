@@ -1,0 +1,4 @@
+# Dev gateway — no hostname needed.
+# Access the app via http://<EC2-node-ip>:<gateway-nodeport>
+# The gateway accepts all hostnames so curl/browser with IP works directly.
+hostname: ""

@@ -1,0 +1,5 @@
+persistence:
+  storageClass: "nfs-storage"
+  size: "5Gi"
+config:
+  dbName: "rentlora_dev"

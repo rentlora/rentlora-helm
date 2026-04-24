@@ -1,0 +1,9 @@
+apiVersion: v2
+name: mongodb
+description: Helm chart for Rentlora MongoDB StatefulSet (NFS-backed)
+type: application
+version: 0.1.0
+appVersion: "7.0"
+maintainers:
+  - name: rentlora
+    url: https://github.com/rentlora
