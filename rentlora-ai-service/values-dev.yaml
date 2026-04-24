@@ -1,4 +1,4 @@
 image:
-  tag: "sha-latest"
+  tag: "sha-12a5bb2"
 config:
   logLevel: "DEBUG"
