@@ -3,8 +3,7 @@
 # then commits and pushes the file. ArgoCD detects the Git change and syncs.
 # Never edit this value manually.
 image:
-  tag: "sha-latest"
-
+  tag: "sha-d3bde68"
 replicaCount: 1
 hpa:
   enabled: false
