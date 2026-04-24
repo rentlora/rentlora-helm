@@ -3,7 +3,7 @@
 
 # --- Configuration ---
 NAMESPACE="rentlora"
-HELM_DIR="./helm"
+HELM_DIR="./"
 # Label for the namespace (e.g., for Istio or simple tracking)
 NS_LABEL="environment=dev"
 
