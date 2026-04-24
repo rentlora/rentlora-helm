@@ -1,6 +1,6 @@
-﻿replicaCount: 1
+replicaCount: 1
 image:
-  repository: iyask/rentlora-property-service
+  repository: ghcr.io/rentlora/rentlora-property-service
   tag: "latest"
   pullPolicy: IfNotPresent
 service:
@@ -37,3 +37,6 @@ config:
 secrets:
   mongoUrl: ""
 
+
+imagePullSecrets:
+  - name: ghcr-secret

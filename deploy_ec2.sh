@@ -16,6 +16,9 @@ SERVICES=(
   "rentlora-ui"
 )
 
+# Optional: Add your GitHub Personal Access Token here to pull private images from GHCR
+GHCR_TOKEN=""
+
 echo "----------------------------------------------------"
 echo "🌐 Preparing Namespace: $NAMESPACE"
 echo "----------------------------------------------------"
@@ -23,6 +26,19 @@ echo "----------------------------------------------------"
 # 1. Create and Label Namespace
 kubectl create namespace "$NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
 kubectl label namespace "$NAMESPACE" "$NS_LABEL" --overwrite
+
+# 2. Create Image Pull Secret for GHCR
+if [ -n "$GHCR_TOKEN" ]; then
+  echo "🔑 Creating image pull secret for GHCR..."
+  kubectl create secret docker-registry ghcr-secret \
+    --docker-server=ghcr.io \
+    --docker-username=rentlora \
+    --docker-password="$GHCR_TOKEN" \
+    -n "$NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
+else
+  echo "⚠️  GHCR_TOKEN is empty. Skipping image pull secret creation."
+  echo "    If your images are private, deployment will fail with ImagePullBackOff."
+fi
 
 echo "📦 Deploying Infrastructure..."
 # 2. Deploy MongoDB and Gateway

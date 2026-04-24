@@ -33,3 +33,6 @@ secrets:
   geminiApiKey: ""
 
 
+
+imagePullSecrets:
+  - name: ghcr-secret

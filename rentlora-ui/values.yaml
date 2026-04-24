@@ -1,7 +1,7 @@
-﻿replicaCount: 1
+replicaCount: 1
 
 image:
-  repository: iyask/rentlora-ui
+  repository: ghcr.io/rentlora/rentlora-ui
   tag: "latest"
   pullPolicy: IfNotPresent
 
@@ -40,3 +40,6 @@ hpa:
 # The UI build-time env vars (VITE_*) are baked in during the Docker build via
 # the CI/CD pipeline using --build-arg, NOT via Kubernetes config.
 
+
+imagePullSecrets:
+  - name: ghcr-secret

@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+﻿apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
@@ -15,7 +15,7 @@ spec:
       labels:
         {{- include "chart.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ .Chart.Name }}-sa
+            {{- with .Values.imagePullSecrets }}\n      imagePullSecrets:\n        {{- toYaml . | nindent 8 }}\n      {{- end }}\n      serviceAccountName: {{ .Chart.Name }}-sa
       securityContext:
         runAsNonRoot: true
         runAsUser: 101   # nginx user ID in nginx:alpine
@@ -43,3 +43,4 @@ spec:
             failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+

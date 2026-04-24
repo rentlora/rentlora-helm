@@ -1,8 +1,8 @@
-﻿# â”€â”€ Base values (shared defaults) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# â”€â”€ Base values (shared defaults) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 replicaCount: 1
 
 image:
-  repository: iyask/rentlora-user-service
+  repository: ghcr.io/rentlora/rentlora-user-service
   tag: "latest"          # overridden per environment by CI/CD
   pullPolicy: IfNotPresent
 
@@ -47,3 +47,6 @@ config:
 secrets:
   mongoUrl: ""    # full mongodb connection string incl. password
 
+
+imagePullSecrets:
+  - name: ghcr-secret
