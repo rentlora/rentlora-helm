@@ -36,16 +36,16 @@ spec:
             - configMapRef:
                 name: {{ .Chart.Name }}-config
           env:
-            - name: MONGO_URL
+            - name: MONGO_USER
               valueFrom:
                 secretKeyRef:
-                  name: shared-mongo-secret
-                  key: MONGO_URI
-            - name: MONGO_URI
+                  name: mongodb-secret
+                  key: MONGO_ROOT_USERNAME
+            - name: MONGO_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: shared-mongo-secret
-                  key: MONGO_URI
+                  name: mongodb-secret
+                  key: MONGO_ROOT_PASSWORD
           livenessProbe:
             httpGet:
               path: {{ .Values.probes.liveness.path }}

@@ -2,7 +2,7 @@ image:
   tag: "sha-a9b6ed5"
 replicaCount: 1
 config:
-  mongoHost: "mongodb.dev.svc.cluster.local"
+  mongoHost: "mongodb.rentlora-dev.svc.cluster.local"
   mongoDbName: "rentlora_dev"
   logLevel: "DEBUG"
 hpa:

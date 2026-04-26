@@ -6,7 +6,7 @@ service:
   type: ClusterIP
 replicaCount: 1
 config:
-  mongoHost: "mongodb.dev.svc.cluster.local"
+  mongoHost: "mongodb.rentlora-dev.svc.cluster.local"
   mongoDbName: "rentlora_dev"
   logLevel: "DEBUG"
 hpa:
