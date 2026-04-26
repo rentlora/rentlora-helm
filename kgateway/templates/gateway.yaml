@@ -13,4 +13,8 @@ spec:
       protocol: HTTP
       allowedRoutes:
         namespaces:
-          from: Same
+          from: Selector
+          selector:
+            matchLabels:
+              shared-gateway: "true"
+

@@ -1,0 +1,73 @@
+{{- if eq .Values.environment "prod" }}
+---
+# ── Cluster-Tools HTTPRoutes ──────────────────────────────────────────────────
+# Each HTTPRoute lives in the SAME namespace as its backend service.
+# The namespaces are labelled shared-gateway=true (see namespace-labels.yaml)
+# so they can attach routes to the gateway in rentlora-prod.
+# No ReferenceGrants needed because backendRefs are same-namespace.
+
+# ── ArgoCD ────────────────────────────────────────────────────────────────────
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: argocd-route
+  namespace: argocd
+spec:
+  parentRefs:
+    - name: rentlora-gateway
+      namespace: rentlora-{{ .Values.environment }}
+  hostnames:
+    - "argocd.rentlora.in"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: argocd-server
+          port: 80
+
+---
+# ── Grafana ───────────────────────────────────────────────────────────────────
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: grafana-route
+  namespace: monitoring
+spec:
+  parentRefs:
+    - name: rentlora-gateway
+      namespace: rentlora-{{ .Values.environment }}
+  hostnames:
+    - "grafana.rentlora.in"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: prometheus-grafana
+          port: 80
+
+---
+# ── Headlamp ─────────────────────────────────────────────────────────────────
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: headlamp-route
+  namespace: kube-system
+spec:
+  parentRefs:
+    - name: rentlora-gateway
+      namespace: rentlora-{{ .Values.environment }}
+  hostnames:
+    - "headlamp.rentlora.in"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: my-headlamp
+          port: 80
+{{- end }}
