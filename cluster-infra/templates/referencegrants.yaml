@@ -1,0 +1,51 @@
+---
+# ReferenceGrants allow the kgateway (in rentlora-prod namespace) to reach
+# backend services in other namespaces (argocd, monitoring, kube-system).
+# Without these, cross-namespace backend references are silently rejected.
+
+# ── Allow gateway → ArgoCD namespace ─────────────────────────────────────────
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-gateway-to-argocd
+  namespace: argocd
+spec:
+  from:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      namespace: rentlora-prod
+  to:
+    - group: ""
+      kind: Service
+
+---
+# ── Allow gateway → Monitoring namespace ─────────────────────────────────────
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-gateway-to-monitoring
+  namespace: monitoring
+spec:
+  from:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      namespace: rentlora-prod
+  to:
+    - group: ""
+      kind: Service
+
+---
+# ── Allow gateway → kube-system namespace (Headlamp) ─────────────────────────
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-gateway-to-kube-system
+  namespace: kube-system
+spec:
+  from:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      namespace: rentlora-prod
+  to:
+    - group: ""
+      kind: Service
