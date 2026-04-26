@@ -1,12 +1,5 @@
 {{- if eq .Values.environment "prod" }}
----
-# ── Cluster-Tools HTTPRoutes ──────────────────────────────────────────────────
-# Each HTTPRoute lives in the SAME namespace as its backend service.
-# The namespaces are labelled shared-gateway=true (see namespace-labels.yaml)
-# so they can attach routes to the gateway in rentlora-prod.
-# No ReferenceGrants needed because backendRefs are same-namespace.
-
-# ── ArgoCD ────────────────────────────────────────────────────────────────────
+# ── ArgoCD Route ──────────────────────────────────────────────────────────────
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
@@ -14,7 +7,9 @@ metadata:
   namespace: argocd
 spec:
   parentRefs:
-    - name: rentlora-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: rentlora-gateway
       namespace: rentlora-{{ .Values.environment }}
   hostnames:
     - "argocd.rentlora.in"
@@ -24,8 +19,11 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: argocd-server
+        - group: ""
+          kind: Service
+          name: argocd-server
           port: 80
+          weight: 1
 
 ---
 # ── Grafana ───────────────────────────────────────────────────────────────────
@@ -36,7 +34,9 @@ metadata:
   namespace: monitoring
 spec:
   parentRefs:
-    - name: rentlora-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: rentlora-gateway
       namespace: rentlora-{{ .Values.environment }}
   hostnames:
     - "grafana.rentlora.in"
@@ -46,11 +46,14 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: prometheus-grafana
+        - group: ""
+          kind: Service
+          name: prometheus-grafana
           port: 80
+          weight: 1
 
 ---
-# ── Headlamp ─────────────────────────────────────────────────────────────────
+# ── Headlamp Route ────────────────────────────────────────────────────────────
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
@@ -58,7 +61,9 @@ metadata:
   namespace: kube-system
 spec:
   parentRefs:
-    - name: rentlora-gateway
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: rentlora-gateway
       namespace: rentlora-{{ .Values.environment }}
   hostnames:
     - "headlamp.rentlora.in"
@@ -68,6 +73,9 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: my-headlamp
+        - group: ""
+          kind: Service
+          name: my-headlamp
           port: 80
+          weight: 1
 {{- end }}
