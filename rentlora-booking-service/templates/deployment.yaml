@@ -41,6 +41,11 @@ spec:
                 secretKeyRef:
                   name: shared-mongo-secret
                   key: MONGO_URI
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: shared-mongo-secret
+                  key: MONGO_URI
           livenessProbe:
             httpGet:
               path: {{ .Values.probes.liveness.path }}
