@@ -2,7 +2,7 @@ image:
   tag: "v1.0.0"
 replicaCount: 2
 config:
-  mongoHost: "mongodb.prod.svc.cluster.local"
+  mongoHost: "mongodb.rentlora-prod.svc.cluster.local"
   mongoDbName: "rentlora_prod"
   logLevel: "INFO"
 hpa:
