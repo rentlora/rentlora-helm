@@ -1,5 +1,5 @@
-﻿persistence:
-  storageClass: "hostpath"
+persistence:
+  storageClass: "nfs-dev"
   size: "5Gi"
 config:
   dbName: "rentlora_dev"

@@ -1,5 +1,5 @@
 persistence:
-  storageClass: "nfs-storage"
-  size: "20Gi"
+  storageClass: "nfs-prod"
+  size: "5Gi"
 config:
   dbName: "rentlora_prod"

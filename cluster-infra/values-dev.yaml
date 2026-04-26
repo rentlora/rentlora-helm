@@ -1,0 +1,3 @@
+environment: "dev"
+nfsServer: "172.31.46.10"
+reclaimPolicy: "Delete"

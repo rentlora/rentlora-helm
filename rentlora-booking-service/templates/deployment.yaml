@@ -1,4 +1,4 @@
-﻿apiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Chart.Name }}
@@ -35,7 +35,7 @@ spec:
             - name: MONGO_URL
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Chart.Name }}-secret
+                  name: shared-mongo-secret
                   key: MONGO_URL
           livenessProbe:
             httpGet:
