@@ -1,6 +1,6 @@
 image:
   tag: "sha-a9b6ed5"
-replicaCount: 1
+replicaCount: 2
 config:
   mongoHost: "mongodb.rentlora-prod.svc.cluster.local"
   mongoDbName: "rentlora_prod"

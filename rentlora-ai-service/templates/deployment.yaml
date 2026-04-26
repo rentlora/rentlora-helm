@@ -41,6 +41,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Chart.Name }}-secret
                   key: GEMINI_API_KEY
+                  optional: true
           livenessProbe:
             httpGet:
               path: {{ .Values.probes.liveness.path }}

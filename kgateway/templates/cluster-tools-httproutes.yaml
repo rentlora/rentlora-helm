@@ -1,5 +1,7 @@
+{{- if .Values.hostname }}
 ---
 # ── ArgoCD Route ──────────────────────────────────────────────────────────────
+# Only deployed in prod (when hostname is set) — requires ReferenceGrants.
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
@@ -69,3 +71,4 @@ spec:
         - name: my-headlamp
           namespace: kube-system
           port: 80
+{{- end }}

@@ -1,7 +1,8 @@
+{{- if eq .Values.environment "prod" }}
 ---
-# ReferenceGrants allow the kgateway (in rentlora-prod namespace) to reach
-# backend services in other namespaces (argocd, monitoring, kube-system).
-# Without these, cross-namespace backend references are silently rejected.
+# ReferenceGrants allow the kgateway (in rentlora-{{ .Values.environment }})
+# to reach backend services in other namespaces.
+# Only needed in prod where cluster-tools HTTPRoutes are enabled.
 
 # ── Allow gateway → ArgoCD namespace ─────────────────────────────────────────
 apiVersion: gateway.networking.k8s.io/v1beta1
@@ -13,7 +14,7 @@ spec:
   from:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      namespace: rentlora-prod
+      namespace: rentlora-{{ .Values.environment }}
   to:
     - group: ""
       kind: Service
@@ -29,7 +30,7 @@ spec:
   from:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      namespace: rentlora-prod
+      namespace: rentlora-{{ .Values.environment }}
   to:
     - group: ""
       kind: Service
@@ -45,7 +46,8 @@ spec:
   from:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      namespace: rentlora-prod
+      namespace: rentlora-{{ .Values.environment }}
   to:
     - group: ""
       kind: Service
+{{- end }}
