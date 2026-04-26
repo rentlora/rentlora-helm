@@ -3,7 +3,7 @@
 # then commits and pushes the file. ArgoCD detects the Git change and syncs.
 # Never edit this value manually.
 image:
-  tag: "sha-9681412"
+  tag: "sha-2b4f4fd"
 service:
   type: ClusterIP
 replicaCount: 1
