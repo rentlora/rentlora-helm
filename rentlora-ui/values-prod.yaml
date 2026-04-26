@@ -1,7 +1,4 @@
-# image.tag is managed by the CI/CD pipeline via GitOps.
-# The pipeline runs: yq e '.image.tag = "v<semver>"' -i helm/<service>/values-prod.yaml
-# then commits and pushes the file. ArgoCD detects the Git change and syncs.
-# Never edit this value manually.
+
 image:
   tag: "sha-2b4f4fd"
 
