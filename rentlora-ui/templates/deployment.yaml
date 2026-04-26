@@ -22,7 +22,7 @@ spec:
       serviceAccountName: {{ .Chart.Name }}-sa
       securityContext:
         runAsNonRoot: true
-        runAsUser: 101   # nginx user ID in nginx:alpine
+        runAsUser: 101  
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
