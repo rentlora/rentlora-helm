@@ -5,7 +5,7 @@
 image:
   tag: "sha-51fe616"
 
-replicaCount: 2
+replicaCount: 1
 hpa:
   enabled: true
   minReplicas: 2

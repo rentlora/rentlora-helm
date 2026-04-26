@@ -2,7 +2,7 @@ image:
   tag: "sha-12a5bb2"
 config:
   logLevel: "INFO"
-replicaCount: 2
+replicaCount: 1
 resources:
   requests:
     cpu: 100m
