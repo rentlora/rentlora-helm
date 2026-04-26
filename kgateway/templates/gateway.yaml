@@ -13,8 +13,12 @@ spec:
       protocol: HTTP
       allowedRoutes:
         namespaces:
+          {{- if .Values.hostname }}
           from: Selector
           selector:
             matchLabels:
               shared-gateway: "true"
+          {{- else }}
+          from: Same
+          {{- end }}
 
