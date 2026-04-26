@@ -1,6 +1,6 @@
 # Prod gateway — set your real domain here.
 # DNS A record must point rentlora.com → your EC2 public IP.
-hostname: "rentlora.com"
+hostname: ""
 
 # When adding Grafana/ArgoCD later, they create their own HTTPRoute
 # in their namespace pointing to this prod gateway with:

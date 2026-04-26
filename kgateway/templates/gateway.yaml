@@ -13,7 +13,4 @@ spec:
       protocol: HTTP
       allowedRoutes:
         namespaces:
-          from: Selector
-          selector:
-            matchLabels:
-              gateway-access: rentlora
+          from: Same
