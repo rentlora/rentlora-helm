@@ -5,11 +5,9 @@
 image:
   tag: "sha-51fe616"
 
-replicaCount: 2
+replicaCount: 1
 hpa:
-  enabled: true
-  minReplicas: 2
-  maxReplicas: 4
+  enabled: false
 resources:
   requests:
     cpu: 100m
