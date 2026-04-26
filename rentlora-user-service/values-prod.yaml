@@ -1,7 +1,7 @@
 # ── Prod overrides ────────────────────────────────────────────────────────────
 # image.tag is set dynamically by CI/CD: v<semver>  e.g. v1.2.0
 image:
-  tag: "v1.0.0"
+  tag: "sha-eeee9f7"
 
 replicaCount: 2
 
