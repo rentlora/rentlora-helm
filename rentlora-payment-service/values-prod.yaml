@@ -5,6 +5,8 @@ config:
   mongoHost: "mongodb.rentlora-prod.svc.cluster.local"
   mongoDbName: "rentlora_prod"
   logLevel: "INFO"
+  bookingServiceUrl: "http://rentlora-booking-service:8003"
+
 hpa:
   enabled: true
   minReplicas: 2
