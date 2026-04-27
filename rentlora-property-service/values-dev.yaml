@@ -7,3 +7,5 @@ config:
   logLevel: "DEBUG"
 hpa:
   enabled: false
+networkPolicy:
+  enabled: true

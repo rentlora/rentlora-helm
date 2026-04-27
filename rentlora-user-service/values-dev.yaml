@@ -11,3 +11,5 @@ config:
   logLevel: "DEBUG"
 hpa:
   enabled: false # No HPA in dev to save resources
+networkPolicy:
+  enabled: true

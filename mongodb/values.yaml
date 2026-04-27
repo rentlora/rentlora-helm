@@ -21,3 +21,11 @@ secrets:
 
 config:
   dbName: "rentlora"
+
+networkPolicy:
+  enabled: false
+  allowedAppNames:
+    - rentlora-user-service
+    - rentlora-property-service
+    - rentlora-booking-service
+    - rentlora-payment-service

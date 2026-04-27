@@ -42,3 +42,6 @@ secrets:
 
 imagePullSecrets:
   - name: ghcr-secret
+
+networkPolicy:
+  enabled: false
