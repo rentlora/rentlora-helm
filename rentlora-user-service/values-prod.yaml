@@ -1,18 +1,14 @@
 # ── Prod overrides ────────────────────────────────────────────────────────────
 # image.tag is set dynamically by CI/CD: v<semver>  e.g. v1.2.0
 image:
-  tag: "sha-eeee9f7"
-
+  tag: "v1.1.1"
 replicaCount: 1
-
 config:
   mongoHost: "mongodb.rentlora-prod.svc.cluster.local"
   mongoDbName: "rentlora_prod"
   logLevel: "INFO"
-
 hpa:
   enabled: false
-
 resources:
   requests:
     cpu: 100m
