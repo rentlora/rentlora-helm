@@ -16,3 +16,5 @@ resources:
   limits:
     cpu: 500m
     memory: 256Mi
+networkPolicy:
+  enabled: true

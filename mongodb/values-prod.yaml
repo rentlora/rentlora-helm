@@ -3,3 +3,5 @@ persistence:
   size: "5Gi"
 config:
   dbName: "rentlora_prod"
+networkPolicy:
+  enabled: true
