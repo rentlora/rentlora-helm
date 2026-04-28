@@ -1,7 +1,7 @@
 # ── Dev overrides ─────────────────────────────────────────────────────────────
 # image.tag is set dynamically by CI/CD:  sha-<7-char-sha>
 image:
-  tag: "sha-d3813bf"
+  tag: "sha-d0f4748"
 service:
   type: ClusterIP
 replicaCount: 1
