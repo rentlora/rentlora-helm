@@ -575,13 +575,3 @@ These placeholders in the Helm values need real values from Terraform outputs:
 | ACM cert ARN | `cd rentlora-infra/stacks/cluster && terraform output acm_cert_arn` |
 | Karpenter node role | `cd rentlora-infra/stacks/cluster && terraform output karpenter_node_instance_profile` |
 | Cluster name | `rentlora-eks` (hardcoded in infra) |
-
----
-
-## Public Repo Constraint
-
-This is a **public repository**. Do NOT include in any committed file:
-- The word "capstone", "assessment", "marks", "grading", or "evaluation"
-- Any personal email address
-- Any hardcoded AWS account IDs (use variables/placeholders)
-- Any actual secret values
