@@ -1,0 +1,8 @@
+# Helm
+charts/**/charts/
+*.tgz
+
+# OS / editor
+.DS_Store
+*.swp
+.env

@@ -1,0 +1,28 @@
+# GatewayParameters — kgateway 2.0 mechanism for customizing the Envoy proxy
+# Service that the Gateway deployer provisions. These annotations land on THAT
+# Service (not on the Gateway object), which is what the AWS Load Balancer
+# Controller and external-dns actually watch.
+#
+# Must live in the SAME namespace as the Gateway: parametersRef has no namespace
+# field and resolves within the Gateway's namespace.
+apiVersion: gateway.kgateway.dev/v1alpha1
+kind: GatewayParameters
+metadata:
+  name: rentlora-nlb-params
+  namespace: rentlora-dev
+spec:
+  kube:
+    service:
+      type: LoadBalancer
+      extraAnnotations:
+        # AWS Load Balancer Controller -> provision an internet-facing NLB,
+        # targeting the Envoy pods directly (ip mode, VPC CNI).
+        service.beta.kubernetes.io/aws-load-balancer-type: "external"
+        service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
+        service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+        # TLS terminates at the NLB using the ACM cert; Envoy receives plain HTTP.
+        # Replace <ACM_CERT_ARN> with: terraform output acm_cert_arn (stacks/cluster).
+        service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "<ACM_CERT_ARN>"
+        service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+        # external-dns (default 'service' source) creates the Route53 record.
+        external-dns.alpha.kubernetes.io/hostname: "dev.rentlora.in"

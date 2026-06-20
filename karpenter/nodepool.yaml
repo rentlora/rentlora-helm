@@ -1,0 +1,33 @@
+# NodePool — provisioning rules for application workloads.
+# The bootstrap managed node group (rentlora-infra eks module, 2x t3.medium)
+# carries system pods; Karpenter scales app nodes on top of it.
+apiVersion: karpenter.sh/v1beta1
+kind: NodePool
+metadata:
+  name: default
+spec:
+  template:
+    spec:
+      nodeClassRef:
+        apiVersion: karpenter.k8s.aws/v1beta1
+        kind: EC2NodeClass
+        name: default
+      requirements:
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: ["spot", "on-demand"]
+        - key: kubernetes.io/arch
+          operator: In
+          values: ["amd64"]
+        - key: node.kubernetes.io/instance-type
+          operator: In
+          values: ["t3.medium", "t3.large", "t3a.medium", "t3a.large"]
+  limits:
+    cpu: 16
+    memory: 64Gi
+  disruption:
+    # WhenUnderutilized consolidates by bin-packing pods onto fewer nodes.
+    # NOTE: consolidateAfter is only valid with WhenEmpty in Karpenter 0.37 (v1beta1);
+    # it must be omitted here or the NodePool fails validation.
+    consolidationPolicy: WhenUnderutilized
+    expireAfter: 720h

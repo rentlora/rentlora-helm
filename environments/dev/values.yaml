@@ -1,0 +1,24 @@
+# Shared override applied to ALL 6 charts for the dev environment.
+# Referenced by the ArgoCD ApplicationSet via the $values multi-source ref.
+#
+# Fill the <...> placeholders from Terraform outputs (no account IDs committed):
+#   ecrRegistry  -> <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
+#   irsaRoleArns -> terraform output -json irsa_role_arns   (stacks/dev)
+#   acmCertArn   -> terraform output acm_cert_arn           (stacks/cluster)
+global:
+  namespace: rentlora-dev
+  env: dev
+  region: us-east-1
+  imageTag: latest                # bumped by rentlora build.yml on each release
+  ecrRegistry: "<ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com"
+
+# IRSA role ARNs — role name pattern: rentlora-eks-dev-<service>
+irsaRoleArns:
+  property-service:  "arn:aws:iam::<ACCOUNT_ID>:role/rentlora-eks-dev-property-service"
+  booking-service:   "arn:aws:iam::<ACCOUNT_ID>:role/rentlora-eks-dev-booking-service"
+  ai-service:        "arn:aws:iam::<ACCOUNT_ID>:role/rentlora-eks-dev-ai-service"
+  admin-service:     "arn:aws:iam::<ACCOUNT_ID>:role/rentlora-eks-dev-admin-service"
+  ai-search-service: "arn:aws:iam::<ACCOUNT_ID>:role/rentlora-eks-dev-ai-search-service"
+
+# Consumed by gateway/gatewayparameters.yaml (applied separately from the charts).
+acmCertArn: "<ACM_CERT_ARN>"

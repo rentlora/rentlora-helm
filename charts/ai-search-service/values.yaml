@@ -1,0 +1,32 @@
+serviceName: ai-search-service
+
+image:
+  name: rentlora-ai-search-service
+  pullPolicy: IfNotPresent
+
+replicaCount: 2
+
+service:
+  port: 8005
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "256Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+
+hpa:
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+
+# Defaults so `helm template` renders standalone; overridden per environment.
+global:
+  ecrRegistry: ""
+  imageTag: "latest"
+  env: "dev"
+  region: "us-east-1"
+
+irsaRoleArns: {}

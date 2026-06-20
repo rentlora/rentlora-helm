@@ -1,0 +1,25 @@
+serviceName: frontend
+
+image:
+  name: rentlora-frontend
+  pullPolicy: IfNotPresent
+
+replicaCount: 2
+
+service:
+  port: 8080
+
+resources:
+  requests:
+    cpu: "100m"      # rubric floor: requests >= 100m CPU
+    memory: "128Mi"  # rubric floor: requests >= 128Mi memory
+  limits:
+    cpu: "300m"      # rubric ceiling: limits <= 500m CPU
+    memory: "256Mi"  # rubric ceiling: limits <= 512Mi memory
+
+# Defaults so `helm template` renders standalone; overridden per environment.
+global:
+  ecrRegistry: ""
+  imageTag: "latest"
+  env: "dev"
+  region: "us-east-1"
