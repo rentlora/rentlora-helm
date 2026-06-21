@@ -19,6 +19,7 @@ spec:
           - chart: ai-service
           - chart: admin-service
           - chart: ai-search-service
+          - chart: user-service
   template:
     metadata:
       name: "rentlora-dev-{{chart}}"
@@ -62,6 +63,7 @@ spec:
 #           - chart: ai-service
 #           - chart: admin-service
 #           - chart: ai-search-service
+#           - chart: user-service
 #   template:
 #     metadata:
 #       name: "rentlora-prod-{{chart}}"

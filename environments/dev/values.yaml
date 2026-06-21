@@ -21,6 +21,7 @@ imageTags:
   ai-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
   admin-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
   ai-search-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
+  user-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
 # IRSA role ARNs — role name pattern: rentlora-eks-dev-<service>
 irsaRoleArns:
   property-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-property-service"
@@ -28,5 +29,7 @@ irsaRoleArns:
   ai-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-ai-service"
   admin-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-admin-service"
   ai-search-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-ai-search-service"
+  user-service:      "arn:aws:iam::280646578520:role/rentlora-eks-dev-user-service"
+
 # Consumed by gateway/gatewayparameters.yaml (applied separately from the charts).
 acmCertArn: "arn:aws:acm:us-east-1:280646578520:certificate/7e4ff623-c276-4546-a806-c2dbe5574143"

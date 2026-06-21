@@ -27,11 +27,17 @@ spec:
         - name: property-service
           port: 8001
 
+    # ── user-service (auth + users) ──
+    - matches:
+        - path: { type: PathPrefix, value: /api/auth }
+        - path: { type: PathPrefix, value: /api/users }
+      backendRefs:
+        - name: user-service
+          port: 8006
+
     # ── booking-service ──
     - matches:
         - path: { type: PathPrefix, value: /api/bookings }
-        - path: { type: PathPrefix, value: /api/auth }
-        - path: { type: PathPrefix, value: /api/users }
       backendRefs:
         - name: booking-service
           port: 8002

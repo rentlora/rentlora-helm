@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.serviceName }}-config
+data:
+  # Only K8s config the apps need; everything else is read from SSM via IRSA.
+  ENV: {{ .Values.global.env | quote }}
+  AWS_DEFAULT_REGION: {{ .Values.global.region | quote }}
