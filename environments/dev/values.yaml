@@ -9,8 +9,19 @@ global:
   namespace: rentlora-dev
   env: dev
   region: us-east-1
-  imageTag: 807bca41196566349caa40f046cec260c7c8b566                # bumped by rentlora build.yml on each release
+  imageTag: 807bca41196566349caa40f046cec260c7c8b566                # fallback tag (per-service overrides below)
   ecrRegistry: "280646578520.dkr.ecr.us-east-1.amazonaws.com"
+
+# Per-service image tags — bumped INDIVIDUALLY by rentlora build.yml so a one-service
+# change only rebuilds + redeploys that service. Charts fall back to global.imageTag
+# for any service not listed here.
+imageTags:
+  frontend:          807bca41196566349caa40f046cec260c7c8b566
+  property-service:  807bca41196566349caa40f046cec260c7c8b566
+  booking-service:   807bca41196566349caa40f046cec260c7c8b566
+  ai-service:        807bca41196566349caa40f046cec260c7c8b566
+  admin-service:     807bca41196566349caa40f046cec260c7c8b566
+  ai-search-service: 807bca41196566349caa40f046cec260c7c8b566
 
 # IRSA role ARNs — role name pattern: rentlora-eks-dev-<service>
 irsaRoleArns:

@@ -23,7 +23,7 @@ spec:
         runAsGroup: 101
       containers:
         - name: {{ .Values.serviceName }}
-          image: "{{ .Values.global.ecrRegistry }}/{{ .Values.image.name }}:{{ .Values.global.imageTag }}"
+          image: "{{ .Values.global.ecrRegistry }}/{{ .Values.image.name }}:{{ get (.Values.imageTags | default dict) .Values.serviceName | default .Values.global.imageTag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.port }}
