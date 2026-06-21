@@ -9,27 +9,24 @@ global:
   namespace: rentlora-dev
   env: dev
   region: us-east-1
-  imageTag: 807bca41196566349caa40f046cec260c7c8b566                # fallback tag (per-service overrides below)
+  imageTag: 807bca41196566349caa40f046cec260c7c8b566 # fallback tag (per-service overrides below)
   ecrRegistry: "280646578520.dkr.ecr.us-east-1.amazonaws.com"
-
 # Per-service image tags — bumped INDIVIDUALLY by rentlora build.yml so a one-service
 # change only rebuilds + redeploys that service. Charts fall back to global.imageTag
 # for any service not listed here.
 imageTags:
-  frontend:          807bca41196566349caa40f046cec260c7c8b566
-  property-service:  807bca41196566349caa40f046cec260c7c8b566
-  booking-service:   807bca41196566349caa40f046cec260c7c8b566
-  ai-service:        807bca41196566349caa40f046cec260c7c8b566
-  admin-service:     807bca41196566349caa40f046cec260c7c8b566
+  frontend: 807bca41196566349caa40f046cec260c7c8b566
+  property-service: 1ba5d42114dce97d8b9f83dae258d5737071e389
+  booking-service: 807bca41196566349caa40f046cec260c7c8b566
+  ai-service: 807bca41196566349caa40f046cec260c7c8b566
+  admin-service: 807bca41196566349caa40f046cec260c7c8b566
   ai-search-service: 807bca41196566349caa40f046cec260c7c8b566
-
 # IRSA role ARNs — role name pattern: rentlora-eks-dev-<service>
 irsaRoleArns:
-  property-service:  "arn:aws:iam::280646578520:role/rentlora-eks-dev-property-service"
-  booking-service:   "arn:aws:iam::280646578520:role/rentlora-eks-dev-booking-service"
-  ai-service:        "arn:aws:iam::280646578520:role/rentlora-eks-dev-ai-service"
-  admin-service:     "arn:aws:iam::280646578520:role/rentlora-eks-dev-admin-service"
+  property-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-property-service"
+  booking-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-booking-service"
+  ai-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-ai-service"
+  admin-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-admin-service"
   ai-search-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-ai-search-service"
-
 # Consumed by gateway/gatewayparameters.yaml (applied separately from the charts).
 acmCertArn: "arn:aws:acm:us-east-1:280646578520:certificate/7e4ff623-c276-4546-a806-c2dbe5574143"
