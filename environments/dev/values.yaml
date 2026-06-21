@@ -15,7 +15,7 @@ global:
 # change only rebuilds + redeploys that service. Charts fall back to global.imageTag
 # for any service not listed here.
 imageTags:
-  frontend: 807bca41196566349caa40f046cec260c7c8b566
+  frontend: abb20406f853c8688f395538dbd40353fbe9e48e
   property-service: 1ba5d42114dce97d8b9f83dae258d5737071e389
   booking-service: 807bca41196566349caa40f046cec260c7c8b566
   ai-service: 807bca41196566349caa40f046cec260c7c8b566
