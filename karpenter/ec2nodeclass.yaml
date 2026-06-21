@@ -8,9 +8,9 @@ metadata:
   name: default
 spec:
   amiFamily: AL2
-  # Node IAM role created by rentlora-infra (addons module). Karpenter manages
-  # the matching instance profile from this role.
-  role: "rentlora-eks-karpenter-node"
+  # Use the instance profile created by rentlora-infra (addons module) directly,
+  # so Karpenter doesn't need IAM perms to create/manage its own profile.
+  instanceProfile: "rentlora-eks-karpenter-node"
   subnetSelectorTerms:
     - tags:
         karpenter.sh/discovery: "rentlora-eks"
