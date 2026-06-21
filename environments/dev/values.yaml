@@ -15,12 +15,12 @@ global:
 # change only rebuilds + redeploys that service. Charts fall back to global.imageTag
 # for any service not listed here.
 imageTags:
-  frontend: 2f87e731f450022397d58eaacef9dc0a4f27cc01
-  property-service: 1ba5d42114dce97d8b9f83dae258d5737071e389
-  booking-service: 807bca41196566349caa40f046cec260c7c8b566
-  ai-service: 807bca41196566349caa40f046cec260c7c8b566
-  admin-service: 807bca41196566349caa40f046cec260c7c8b566
-  ai-search-service: 807bca41196566349caa40f046cec260c7c8b566
+  frontend: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
+  property-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
+  booking-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
+  ai-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
+  admin-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
+  ai-search-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
 # IRSA role ARNs — role name pattern: rentlora-eks-dev-<service>
 irsaRoleArns:
   property-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-property-service"
