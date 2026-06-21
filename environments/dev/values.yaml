@@ -9,7 +9,7 @@ global:
   namespace: rentlora-dev
   env: dev
   region: us-east-1
-  imageTag: 37a5bc67dd318a3003d24614cce8f50f1fcde95c                # bumped by rentlora build.yml on each release
+  imageTag: 9ed243524c1319498015c627ec83204915c03688                # bumped by rentlora build.yml on each release
   ecrRegistry: "280646578520.dkr.ecr.us-east-1.amazonaws.com"
 
 # IRSA role ARNs — role name pattern: rentlora-eks-dev-<service>
