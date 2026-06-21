@@ -19,7 +19,8 @@ resources:
 
 # Defaults so `helm template` renders standalone; overridden per environment.
 global:
-  ecrRegistry: ""
+  accountId: ""
+  cluster: "rentlora-eks"
   imageTag: "latest"
   env: "dev"
   region: "us-east-1"

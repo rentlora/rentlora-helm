@@ -20,7 +20,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: {{ .Values.serviceName }}
-          image: "{{ .Values.global.ecrRegistry }}/{{ .Values.image.name }}:{{ get (.Values.imageTags | default dict) .Values.serviceName | default .Values.global.imageTag }}"
+          image: "{{ .Values.global.accountId }}.dkr.ecr.{{ .Values.global.region }}.amazonaws.com/{{ .Values.image.name }}:{{ get (.Values.imageTags | default dict) .Values.serviceName | default .Values.global.imageTag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.port }}

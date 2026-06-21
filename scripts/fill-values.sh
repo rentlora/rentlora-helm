@@ -25,16 +25,23 @@ echo "  account = $ACCOUNT"
 echo "  acm arn = $ACM_ARN"
 
 # Role names (rentlora-eks-<env>-<svc>) and the ECR region are already correct in the
-# templates — only the account id and cert ARN are placeholders.
-for f in \
-  "$HELM_ROOT/environments/dev/values.yaml" \
-  "$HELM_ROOT/environments/prod/values.yaml" \
-  "$HELM_ROOT/gateway/gatewayparameters.yaml"
-do
+# Point the env values at this account. The charts DERIVE the ECR registry and each
+# IRSA role ARN from global.accountId, so only these two values need setting (idempotent
+# — safe to re-run when switching accounts).
+for env in dev prod; do
+  f="$HELM_ROOT/environments/$env/values.yaml"
   [ -f "$f" ] || { echo "  skip (missing): $f"; continue; }
-  sed -i "s/<ACCOUNT_ID>/$ACCOUNT/g; s#<ACM_CERT_ARN>#$ACM_ARN#g" "$f"
-  echo "  filled ${f#"$HELM_ROOT/"}"
+  yq -i ".global.accountId = \"$ACCOUNT\"" "$f"
+  yq -i ".acmCertArn = \"$ACM_ARN\""       "$f"
+  echo "  set accountId + acmCertArn in environments/$env/values.yaml"
 done
+
+# Gateway is applied via kubectl (not Helm), so its ACM cert ARN must be a literal.
+gw="$HELM_ROOT/gateway/gatewayparameters.yaml"
+if [ -f "$gw" ]; then
+  sed -i -E "s#(aws-load-balancer-ssl-cert: ).*#\1\"$ACM_ARN\"#" "$gw"
+  echo "  set ACM cert in gateway/gatewayparameters.yaml"
+fi
 
 echo
 echo "Done. Review and commit:"

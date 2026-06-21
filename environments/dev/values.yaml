@@ -1,19 +1,19 @@
-# Shared override applied to ALL 6 charts for the dev environment.
+# Shared override applied to ALL charts for the dev environment.
 # Referenced by the ArgoCD ApplicationSet via the $values multi-source ref.
 #
-# Fill the <...> placeholders from Terraform outputs (no account IDs committed):
-#   ecrRegistry  -> 280646578520.dkr.ecr.us-east-1.amazonaws.com
-#   irsaRoleArns -> terraform output -json irsa_role_arns   (stacks/dev)
-#   acmCertArn   -> terraform output acm_cert_arn           (stacks/cluster)
+# Account-specific config is a SINGLE value (global.accountId). The charts DERIVE the
+# ECR registry and each service's IRSA role ARN from it — nothing else hardcodes the
+# account. On a new account, change accountId (+ acmCertArn) and that's it.
 global:
   namespace: rentlora-dev
   env: dev
   region: us-east-1
+  accountId: "280646578520"          # the ONE account-specific value
+  cluster: rentlora-eks              # role names: <cluster>-<env>-<service>
   imageTag: 807bca41196566349caa40f046cec260c7c8b566 # fallback tag (per-service overrides below)
-  ecrRegistry: "280646578520.dkr.ecr.us-east-1.amazonaws.com"
+
 # Per-service image tags — bumped INDIVIDUALLY by rentlora build.yml so a one-service
-# change only rebuilds + redeploys that service. Charts fall back to global.imageTag
-# for any service not listed here.
+# change only rebuilds + redeploys that service. Charts fall back to global.imageTag.
 imageTags:
   frontend: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
   property-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
@@ -22,14 +22,7 @@ imageTags:
   admin-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
   ai-search-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
   user-service: 3c3ae9cb07943f9e716f8343a3efd00c218eaf6a
-# IRSA role ARNs — role name pattern: rentlora-eks-dev-<service>
-irsaRoleArns:
-  property-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-property-service"
-  booking-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-booking-service"
-  ai-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-ai-service"
-  admin-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-admin-service"
-  ai-search-service: "arn:aws:iam::280646578520:role/rentlora-eks-dev-ai-search-service"
-  user-service:      "arn:aws:iam::280646578520:role/rentlora-eks-dev-user-service"
 
-# Consumed by gateway/gatewayparameters.yaml (applied separately from the charts).
+# Consumed by gateway/gatewayparameters.yaml (applied separately). The cert UUID is
+# unique per environment, so this can't be derived — set it once at bootstrap.
 acmCertArn: "arn:aws:acm:us-east-1:280646578520:certificate/7e4ff623-c276-4546-a806-c2dbe5574143"
