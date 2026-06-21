@@ -23,7 +23,7 @@ spec:
       protocol: HTTP
       allowedRoutes:
         namespaces:
-          from: Same
+          from: All        # shared platform gateway: app (rentlora-dev) + argocd routes attach
     # NLB terminates TLS on :443 (ssl-ports annotation) and forwards decrypted
     # HTTP to Envoy on this listener.
     - name: https
@@ -31,4 +31,4 @@ spec:
       protocol: HTTP
       allowedRoutes:
         namespaces:
-          from: Same
+          from: All        # shared platform gateway: app (rentlora-dev) + argocd routes attach
