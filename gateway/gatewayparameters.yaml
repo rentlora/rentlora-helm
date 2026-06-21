@@ -21,8 +21,8 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "ip"
         service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
         # TLS terminates at the NLB using the ACM cert; Envoy receives plain HTTP.
-        # Replace <ACM_CERT_ARN> with: terraform output acm_cert_arn (stacks/cluster).
-        service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "<ACM_CERT_ARN>"
+        # Replace arn:aws:acm:us-east-1:280646578520:certificate/7e4ff623-c276-4546-a806-c2dbe5574143 with: terraform output acm_cert_arn (stacks/cluster).
+        service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:280646578520:certificate/7e4ff623-c276-4546-a806-c2dbe5574143"
         service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
         # external-dns (default 'service' source) creates the Route53 record.
         external-dns.alpha.kubernetes.io/hostname: "dev.rentlora.in"

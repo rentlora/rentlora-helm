@@ -43,43 +43,46 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
----
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: rentlora-prod
-  namespace: argocd
-spec:
-  generators:
-    - list:
-        elements:
-          - chart: frontend
-          - chart: property-service
-          - chart: booking-service
-          - chart: ai-service
-          - chart: admin-service
-          - chart: ai-search-service
-  template:
-    metadata:
-      name: "rentlora-prod-{{chart}}"
-    spec:
-      project: default
-      sources:
-        - repoURL: https://github.com/rentlora/rentlora-helm
-          targetRevision: main
-          ref: values
-        - repoURL: https://github.com/rentlora/rentlora-helm
-          targetRevision: main
-          path: "charts/{{chart}}"
-          helm:
-            valueFiles:
-              - $values/environments/prod/values.yaml
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: production
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
+# Prod ApplicationSet — temporarily disabled until stacks/prod is applied and
+# the production environment is ready to receive traffic. Uncomment this block
+# once `cd rentlora-infra/stacks/prod && terraform apply` succeeds.
+# ---
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: rentlora-prod
+#   namespace: argocd
+# spec:
+#   generators:
+#     - list:
+#         elements:
+#           - chart: frontend
+#           - chart: property-service
+#           - chart: booking-service
+#           - chart: ai-service
+#           - chart: admin-service
+#           - chart: ai-search-service
+#   template:
+#     metadata:
+#       name: "rentlora-prod-{{chart}}"
+#     spec:
+#       project: default
+#       sources:
+#         - repoURL: https://github.com/rentlora/rentlora-helm
+#           targetRevision: main
+#           ref: values
+#         - repoURL: https://github.com/rentlora/rentlora-helm
+#           targetRevision: main
+#           path: "charts/{{chart}}"
+#           helm:
+#             valueFiles:
+#               - $values/environments/prod/values.yaml
+#       destination:
+#         server: https://kubernetes.default.svc
+#         namespace: production
+#       syncPolicy:
+#         automated:
+#           prune: true
+#           selfHeal: true
+#         syncOptions:
+#           - CreateNamespace=true
