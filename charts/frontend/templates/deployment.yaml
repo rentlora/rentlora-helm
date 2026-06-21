@@ -15,9 +15,12 @@ spec:
         app: {{ .Values.serviceName }}
     spec:
       serviceAccountName: {{ .Values.serviceName }}
-      # nginx-unprivileged runs as UID 101 — do NOT pin runAsUser: 1000 here.
+      # nginx-unprivileged image uses `USER nginx` (UID 101). runAsNonRoot needs a
+      # numeric UID to verify non-root, so pin it explicitly to 101.
       securityContext:
         runAsNonRoot: true
+        runAsUser: 101
+        runAsGroup: 101
       containers:
         - name: {{ .Values.serviceName }}
           image: "{{ .Values.global.ecrRegistry }}/{{ .Values.image.name }}:{{ .Values.global.imageTag }}"
