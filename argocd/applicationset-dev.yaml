@@ -1,0 +1,43 @@
+# DEV ApplicationSet — generates one ArgoCD Application per chart for the dev env.
+# Multi-source `$values` pattern: the env values file lives outside the chart path
+# (environments/dev/values.yaml), referenced via a `ref` source.
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: rentlora-dev
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - chart: frontend
+          - chart: property-service
+          - chart: booking-service
+          - chart: ai-service
+          - chart: admin-service
+          - chart: ai-search-service
+          - chart: user-service
+  template:
+    metadata:
+      name: "rentlora-dev-{{chart}}"
+    spec:
+      project: default
+      sources:
+        - repoURL: https://github.com/rentlora/rentlora-helm
+          targetRevision: main
+          ref: values
+        - repoURL: https://github.com/rentlora/rentlora-helm
+          targetRevision: main
+          path: "charts/{{chart}}"
+          helm:
+            valueFiles:
+              - $values/environments/dev/values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: rentlora-dev
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

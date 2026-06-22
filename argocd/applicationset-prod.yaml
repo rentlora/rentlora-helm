@@ -1,0 +1,43 @@
+# PROD ApplicationSet — generates one ArgoCD Application per chart for the prod env.
+# Apply this only after stacks/prod is up. Uses environments/prod/values.yaml
+# (on-demand nodes, replicas=2).
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: rentlora-prod
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - chart: frontend
+          - chart: property-service
+          - chart: booking-service
+          - chart: ai-service
+          - chart: admin-service
+          - chart: ai-search-service
+          - chart: user-service
+  template:
+    metadata:
+      name: "rentlora-prod-{{chart}}"
+    spec:
+      project: default
+      sources:
+        - repoURL: https://github.com/rentlora/rentlora-helm
+          targetRevision: main
+          ref: values
+        - repoURL: https://github.com/rentlora/rentlora-helm
+          targetRevision: main
+          path: "charts/{{chart}}"
+          helm:
+            valueFiles:
+              - $values/environments/prod/values.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: production
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
