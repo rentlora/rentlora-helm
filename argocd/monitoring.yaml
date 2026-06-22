@@ -1,0 +1,61 @@
+# Monitoring stack — kube-prometheus-stack (Prometheus + Grafana + node-exporter +
+# kube-state-metrics) deployed by ArgoCD from the prometheus-community Helm repo.
+# Lean config for a small cluster: Alertmanager off, short Prometheus retention,
+# ephemeral (emptyDir) storage. Grafana is exposed at https://grafana.rentlora.in
+# via monitoring/grafana-route.yaml (HTTPRoute on the shared dev gateway).
+#
+# Standalone Application (not part of the per-service ApplicationSets) — apply with
+# `kubectl apply -f argocd/monitoring.yaml`.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 87.0.0
+    helm:
+      releaseName: kube-prometheus-stack
+      values: |
+        # Alertmanager not needed for a demo — turn it off to save memory.
+        alertmanager:
+          enabled: false
+        # Lean Prometheus: 2-day retention, modest requests, no PVC (emptyDir).
+        prometheus:
+          prometheusSpec:
+            retention: 2d
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 1Gi
+        grafana:
+          # Admin creds come from a manually-created Secret (kept out of this public
+          # repo): kubectl -n monitoring create secret generic grafana-admin \
+          #   --from-literal=admin-user=admin --from-literal=admin-password=<pw>
+          admin:
+            existingSecret: grafana-admin
+            userKey: admin-user
+            passwordKey: admin-password
+          service:
+            type: ClusterIP
+          # Served at the root of grafana.rentlora.in; NLB terminates TLS.
+          grafana.ini:
+            server:
+              domain: grafana.rentlora.in
+              root_url: "https://grafana.rentlora.in"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      # kube-prometheus-stack CRDs are large; SSA avoids the 256KB annotation limit.
+      - ServerSideApply=true

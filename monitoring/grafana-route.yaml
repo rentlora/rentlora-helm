@@ -1,0 +1,19 @@
+# Exposes Grafana at https://grafana.rentlora.in through the shared dev gateway.
+# TLS terminates at the NLB (wildcard *.rentlora.in cert); Grafana receives plain HTTP.
+# Lives in the monitoring namespace (same as the grafana Service, so no ReferenceGrant
+# needed) and attaches cross-namespace to the gateway in rentlora-dev via parentRefs.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  parentRefs:
+    - name: rentlora-gateway
+      namespace: rentlora-dev
+  hostnames:
+    - grafana.rentlora.in
+  rules:
+    - backendRefs:
+        - name: kube-prometheus-stack-grafana
+          port: 80

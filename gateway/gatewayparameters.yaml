@@ -26,4 +26,4 @@ spec:
         service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
         # external-dns (default 'service' source) creates the Route53 records.
         # All hostnames point at this one NLB; the Gateway routes by Host header.
-        external-dns.alpha.kubernetes.io/hostname: "dev.rentlora.in,argocd.rentlora.in"
+        external-dns.alpha.kubernetes.io/hostname: "dev.rentlora.in,argocd.rentlora.in,grafana.rentlora.in"
