@@ -36,12 +36,12 @@ for env in dev prod; do
   echo "  set accountId + acmCertArn in environments/$env/values.yaml"
 done
 
-# Gateway is applied via kubectl (not Helm), so its ACM cert ARN must be a literal.
-gw="$HELM_ROOT/gateway/gatewayparameters.yaml"
-if [ -f "$gw" ]; then
+# Gateways are applied via kubectl (not Helm), so their ACM cert ARN must be a literal.
+for gw in "$HELM_ROOT/gateway/gatewayparameters.yaml" "$HELM_ROOT/gateway-prod/gatewayparameters.yaml"; do
+  [ -f "$gw" ] || continue
   sed -i -E "s#(aws-load-balancer-ssl-cert: ).*#\1\"$ACM_ARN\"#" "$gw"
-  echo "  set ACM cert in gateway/gatewayparameters.yaml"
-fi
+  echo "  set ACM cert in ${gw#"$HELM_ROOT/"}"
+done
 
 echo
 echo "Done. Review and commit:"

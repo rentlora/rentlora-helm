@@ -1,0 +1,34 @@
+# Gateway — references the built-in 'kgateway' GatewayClass (auto-created by the
+# kgateway 2.0 install; controllerName kgateway.dev/kgateway). Do NOT define a
+# GatewayClass here — that would conflict with the installed one.
+#
+# The deployer provisions an Envoy proxy Deployment + Service for this Gateway,
+# customized by the GatewayParameters referenced below.
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: rentlora-gateway
+  namespace: production
+spec:
+  gatewayClassName: kgateway
+  infrastructure:
+    parametersRef:
+      group: gateway.kgateway.dev
+      kind: GatewayParameters
+      name: rentlora-nlb-params
+  listeners:
+    # Plain HTTP on :80 (NLB forwards TCP). Kept for an http->https redirect later.
+    - name: http
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All        # shared platform gateway: app (rentlora-dev) + argocd routes attach
+    # NLB terminates TLS on :443 (ssl-ports annotation) and forwards decrypted
+    # HTTP to Envoy on this listener.
+    - name: https
+      port: 443
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All        # shared platform gateway: app (rentlora-dev) + argocd routes attach
