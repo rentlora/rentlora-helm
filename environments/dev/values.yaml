@@ -11,11 +11,8 @@ global:
   accountId: "611467706284" # the ONE account-specific value
   cluster: rentlora-eks # role names: <cluster>-<env>-<service>
   imageTag: 807bca41196566349caa40f046cec260c7c8b566 # fallback tag (per-service overrides below)
-# Cost: dev runs on Karpenter SPOT nodes (cheap, can be reclaimed on 2-min notice),
 # single replica, HPA floor of 1. These root-level keys override every chart's
 # defaults (Helm merges this values file over each chart's values.yaml).
-nodeSelector:
-  karpenter.sh/capacity-type: spot
 replicaCount: 1
 hpa:
   minReplicas: 1

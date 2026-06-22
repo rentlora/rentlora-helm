@@ -12,10 +12,7 @@ global:
   cluster: rentlora-eks              # role names: <cluster>-<env>-<service>
   imageTag: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
 
-# Prod runs on Karpenter ON-DEMAND nodes for stability (not reclaimable like spot).
 # replicaCount stays at the chart default of 2.
-nodeSelector:
-  karpenter.sh/capacity-type: on-demand
 
 # Consumed by a prod copy of gateway/gatewayparameters.yaml (namespace: production).
 # Cert UUID is unique per env, so set once at bootstrap (not derivable).
