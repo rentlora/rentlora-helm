@@ -10,7 +10,7 @@ global:
   region: us-east-1
   accountId: "611467706284"          # the ONE account-specific value
   cluster: rentlora-eks              # role names: <cluster>-<env>-<service>
-  imageTag: latest                   # pin to a released tag in prod; bumped by deploy.yml
+  imageTag: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
 
 # Prod runs on Karpenter ON-DEMAND nodes for stability (not reclaimable like spot).
 # replicaCount stays at the chart default of 2.
