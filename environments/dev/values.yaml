@@ -22,7 +22,7 @@ imageTags:
   frontend: af91cc60b5b3876a5d1c8d75e74874ca90956f89
   property-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
   booking-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
-  ai-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
+  ai-service: ae86e4ad1f10d25f7068028d3f26d275f6a5f477
   admin-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
   ai-search-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
   user-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
