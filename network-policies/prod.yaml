@@ -1,0 +1,44 @@
+# NetworkPolicies for the production app namespace — see network-policies/dev.yaml
+# for the full rationale. Ingress-only; egress unrestricted. Requires VPC CNI
+# enableNetworkPolicy=true.
+---
+# 1. Default-deny all ingress.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+---
+# 2. Allow ingress from any pod in the same namespace.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-same-namespace
+  namespace: production
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector: {}
+---
+# 3. Gateway is the entry point — ingress from anywhere (already fronted by the
+#    CloudFront-only SG + WAF).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-gateway-external
+  namespace: production
+spec:
+  podSelector:
+    matchLabels:
+      gateway.networking.k8s.io/gateway-name: rentlora-gateway
+  policyTypes:
+    - Ingress
+  ingress:
+    - {}

@@ -1,0 +1,49 @@
+# NetworkPolicies for the dev app namespace — east-west microsegmentation.
+# Ingress-only by design: egress is left unrestricted so DNS (CoreDNS), RDS, and all
+# AWS API calls (Secrets Manager, S3, SQS, Bedrock) keep working with zero risk.
+#
+# Effect: backend pods accept traffic ONLY from other pods in this namespace (the
+# gateway + sibling services). The gateway is the single externally-reachable pod.
+# Cross-namespace ingress to app pods is denied (e.g. a compromised pod elsewhere
+# can't hit these services directly). Requires VPC CNI enableNetworkPolicy=true.
+---
+# 1. Default-deny all ingress in the namespace.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: rentlora-dev
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+---
+# 2. Allow ingress from any pod in the SAME namespace (gateway->service, service->service).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-same-namespace
+  namespace: rentlora-dev
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector: {}
+---
+# 3. The gateway is the entry point — allow it ingress from anywhere (NLB + health
+#    checks). Upstream it's still protected by the CloudFront SG + WAF (prod) / NLB.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-gateway-external
+  namespace: rentlora-dev
+spec:
+  podSelector:
+    matchLabels:
+      gateway.networking.k8s.io/gateway-name: rentlora-gateway
+  policyTypes:
+    - Ingress
+  ingress:
+    - {}
