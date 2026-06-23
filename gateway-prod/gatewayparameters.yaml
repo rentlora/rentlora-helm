@@ -24,6 +24,8 @@ spec:
         # Replace arn:aws:acm:us-east-1:611467706284:certificate/1db8c28a-68f5-42d0-a7b0-c042b1657ec9 with: terraform output acm_cert_arn (stacks/cluster).
         service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:us-east-1:611467706284:certificate/1db8c28a-68f5-42d0-a7b0-c042b1657ec9"
         service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
-        # external-dns (default 'service' source) creates the Route53 records.
-        # All hostnames point at this one NLB; the Gateway routes by Host header.
-        external-dns.alpha.kubernetes.io/hostname: "rentlora.in"
+        # external-dns creates origin.rentlora.in -> this NLB. CloudFront fronts the
+        # public apex (rentlora.in) and uses origin.rentlora.in as its origin; WAF +
+        # edge caching live on the CloudFront distribution (see rentlora-infra
+        # modules/waf-cloudfront). The Gateway routes purely by path, so any Host works.
+        external-dns.alpha.kubernetes.io/hostname: "origin.rentlora.in"
