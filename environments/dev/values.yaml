@@ -19,11 +19,11 @@ hpa:
 # Per-service image tags — bumped INDIVIDUALLY by rentlora build.yml so a one-service
 # change only rebuilds + redeploys that service. Charts fall back to global.imageTag.
 imageTags:
-  frontend: 0068c7b4f73152168baeb5bba345a234e80f6c58
+  frontend: 0d72483ff591ab9dfc7877239ddac88151ea2e89
   property-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
   booking-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
   ai-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
-  admin-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
+  admin-service: 0d72483ff591ab9dfc7877239ddac88151ea2e89
   ai-search-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
   user-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
 # Consumed by gateway/gatewayparameters.yaml (applied separately). The cert UUID is
