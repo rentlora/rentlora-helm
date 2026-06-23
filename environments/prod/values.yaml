@@ -8,27 +8,24 @@ global:
   namespace: production
   env: prod
   region: us-east-1
-  accountId: "611467706284"          # the ONE account-specific value
-  cluster: rentlora-eks              # role names: <cluster>-<env>-<service>
-  imageTag: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8  # fallback only
-
+  accountId: "611467706284" # the ONE account-specific value
+  cluster: rentlora-eks # role names: <cluster>-<env>-<service>
+  imageTag: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8 # fallback only
 # Per-service image tags — promoted from dev by release.yml.
 # releaseVersion is written by the pipeline for auditability.
-releaseVersion: ""
+releaseVersion: "v1.0.0"
 imageTags:
-  frontend:          a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-  property-service:  a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-  booking-service:   a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-  ai-service:        a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-  admin-service:     a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  frontend: 0068c7b4f73152168baeb5bba345a234e80f6c58
+  property-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  booking-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  ai-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  admin-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
   ai-search-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-  user-service:      a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-
+  user-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
 # Single replica per service (cost). On a paid plan, bump to 2 for HA anytime.
 replicaCount: 1
 hpa:
   minReplicas: 1
-
 # Consumed by a prod copy of gateway/gatewayparameters.yaml (namespace: production).
 # Cert UUID is unique per env, so set once at bootstrap (not derivable).
 acmCertArn: "arn:aws:acm:us-east-1:611467706284:certificate/1db8c28a-68f5-42d0-a7b0-c042b1657ec9"
