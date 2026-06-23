@@ -13,15 +13,15 @@ global:
   imageTag: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8 # fallback only
 # Per-service image tags — promoted from dev by release.yml.
 # releaseVersion is written by the pipeline for auditability.
-releaseVersion: "v1.0.0"
+releaseVersion: "v1.1.0"
 imageTags:
-  frontend: 0068c7b4f73152168baeb5bba345a234e80f6c58
-  property-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-  booking-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-  ai-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-  admin-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-  ai-search-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
-  user-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  frontend: 0d72483ff591ab9dfc7877239ddac88151ea2e89
+  property-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
+  booking-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
+  ai-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
+  admin-service: 0d72483ff591ab9dfc7877239ddac88151ea2e89
+  ai-search-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
+  user-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
 # Single replica per service (cost). On a paid plan, bump to 2 for HA anytime.
 replicaCount: 1
 hpa:
