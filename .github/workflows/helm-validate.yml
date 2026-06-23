@@ -1,0 +1,64 @@
+name: helm-validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: helm-validate-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: lint + template
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: '3.17.0'
+
+      - name: Lint all charts
+        run: |
+          for chart in charts/*/; do
+            echo "=== helm lint: $chart ==="
+            helm lint "$chart" -f environments/dev/values.yaml
+          done
+
+      - name: Template all charts (dev)
+        run: |
+          for chart in charts/*/; do
+            svc=$(basename "$chart")
+            echo "=== helm template: $svc (dev) ==="
+            helm template "rentlora-dev-${svc}" "$chart" \
+              -f environments/dev/values.yaml
+          done
+
+      - name: Template all charts (prod)
+        run: |
+          for chart in charts/*/; do
+            svc=$(basename "$chart")
+            echo "=== helm template: $svc (prod) ==="
+            helm template "rentlora-prod-${svc}" "$chart" \
+              -f environments/prod/values.yaml
+          done
+
+      - uses: actions/checkout@v4
+        if: failure()
+
+      - name: Notify failure
+        if: failure()
+        uses: ./.github/actions/notify
+        with:
+          status: failure
+          title: "helm validate failed"
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          details: "${{ github.head_ref || github.ref_name }}"

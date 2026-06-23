@@ -1,0 +1,69 @@
+name: notify
+description: >
+  Post a success/failure message to a Slack incoming webhook using Block Kit.
+  No-op if no webhook URL is configured.
+
+inputs:
+  status:
+    description: "success | failure"
+    required: true
+  title:
+    description: Short headline for the message.
+    required: true
+  webhook-url:
+    description: Slack incoming webhook URL (pass secrets.SLACK_WEBHOOK_URL).
+    required: true
+  details:
+    description: Optional extra context (appended after repo · branch · sha).
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Post to Slack
+      shell: bash
+      env:
+        WEBHOOK: ${{ inputs.webhook-url }}
+        STATUS: ${{ inputs.status }}
+        TITLE: ${{ inputs.title }}
+        DETAILS: ${{ inputs.details }}
+      run: |
+        if [ -z "${WEBHOOK}" ]; then
+          echo "SLACK_WEBHOOK_URL not set — skipping notification."
+          exit 0
+        fi
+
+        SHORT_SHA="${GITHUB_SHA::7}"
+        RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
+        if [ "${STATUS}" = "success" ]; then ICON=":white_check_mark:"; else ICON=":x:"; fi
+
+        CONTEXT="\`${GITHUB_REPOSITORY}\` · \`${GITHUB_REF_NAME}\` · \`${SHORT_SHA}\`"
+        if [ -n "${DETAILS}" ]; then
+          CONTEXT="${CONTEXT} · ${DETAILS}"
+        fi
+
+        payload=$(jq -nc \
+          --arg title "${ICON}  *${TITLE}*" \
+          --arg run_url "${RUN_URL}" \
+          --arg context "${CONTEXT}" \
+          '{
+            blocks: [
+              {
+                type: "section",
+                text: { type: "mrkdwn", text: $title },
+                accessory: {
+                  type: "button",
+                  text: { type: "plain_text", text: "View Run ↗", emoji: true },
+                  url: $run_url
+                }
+              },
+              {
+                type: "context",
+                elements: [{ type: "mrkdwn", text: $context }]
+              }
+            ]
+          }')
+
+        curl -fsS -X POST -H 'Content-type: application/json' --data "${payload}" "${WEBHOOK}"
