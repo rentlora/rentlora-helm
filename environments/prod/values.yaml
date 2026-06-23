@@ -2,15 +2,27 @@
 # Referenced by the prod ArgoCD ApplicationSet via the $values multi-source ref.
 #
 # Account-specific config is a SINGLE value (global.accountId). Charts DERIVE the ECR
-# registry and each IRSA role ARN from it. Prod uses one coordinated imageTag (no per-
-# service map) — promoted via deploy.yml.
+# registry and each IRSA role ARN from it. Per-service imageTags are promoted from dev
+# by release.yml when a GitHub Release is published.
 global:
   namespace: production
   env: prod
   region: us-east-1
   accountId: "611467706284"          # the ONE account-specific value
   cluster: rentlora-eks              # role names: <cluster>-<env>-<service>
-  imageTag: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  imageTag: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8  # fallback only
+
+# Per-service image tags — promoted from dev by release.yml.
+# releaseVersion is written by the pipeline for auditability.
+releaseVersion: ""
+imageTags:
+  frontend:          a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  property-service:  a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  booking-service:   a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  ai-service:        a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  admin-service:     a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  ai-search-service: a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
+  user-service:      a82605c07b5d4a5d1854dc2255ccb4d44d626ae8
 
 # Single replica per service (cost). On a paid plan, bump to 2 for HA anytime.
 replicaCount: 1
