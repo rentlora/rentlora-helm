@@ -24,7 +24,7 @@ imageTags:
   booking-service: eef389afc2d9586a4e46556654398836214687f5
   ai-service: f8602b1b1d0ffb1e3a333525b182efe49269b626
   admin-service: 20a3dac6f871ead1508a3ebedc2d0edb0da21820
-  ai-search-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
+  ai-search-service: 263181def0d70dd1498d619b95a528d923a7f624
   user-service: 36d210ad453fb0d0ec1d82fadf8159d6c68ee93b
 # Consumed by gateway/gatewayparameters.yaml (applied separately). The cert UUID is
 # unique per environment, so this can't be derived — set it once at bootstrap.
