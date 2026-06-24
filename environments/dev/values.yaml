@@ -23,7 +23,7 @@ imageTags:
   property-service: f1b74c57b968c3e35059f2825c1fe0e8ecc8b63d
   booking-service: eef389afc2d9586a4e46556654398836214687f5
   ai-service: f8602b1b1d0ffb1e3a333525b182efe49269b626
-  admin-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
+  admin-service: 20a3dac6f871ead1508a3ebedc2d0edb0da21820
   ai-search-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
   user-service: 36d210ad453fb0d0ec1d82fadf8159d6c68ee93b
 # Consumed by gateway/gatewayparameters.yaml (applied separately). The cert UUID is
