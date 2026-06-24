@@ -20,7 +20,7 @@ hpa:
 # change only rebuilds + redeploys that service. Charts fall back to global.imageTag.
 imageTags:
   frontend: af91cc60b5b3876a5d1c8d75e74874ca90956f89
-  property-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
+  property-service: f1b74c57b968c3e35059f2825c1fe0e8ecc8b63d
   booking-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
   ai-service: ae86e4ad1f10d25f7068028d3f26d275f6a5f477
   admin-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
