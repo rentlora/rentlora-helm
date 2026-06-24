@@ -25,7 +25,7 @@ imageTags:
   ai-service: f8602b1b1d0ffb1e3a333525b182efe49269b626
   admin-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
   ai-search-service: 0068c7b4f73152168baeb5bba345a234e80f6c58
-  user-service: 4252396f128cf558efeffcabcff89ceb2d52ee90
+  user-service: 36d210ad453fb0d0ec1d82fadf8159d6c68ee93b
 # Consumed by gateway/gatewayparameters.yaml (applied separately). The cert UUID is
 # unique per environment, so this can't be derived — set it once at bootstrap.
 acmCertArn: "arn:aws:acm:us-east-1:611467706284:certificate/1db8c28a-68f5-42d0-a7b0-c042b1657ec9"
