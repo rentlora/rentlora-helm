@@ -19,7 +19,7 @@ hpa:
 # Per-service image tags — bumped INDIVIDUALLY by rentlora build.yml so a one-service
 # change only rebuilds + redeploys that service. Charts fall back to global.imageTag.
 imageTags:
-  frontend: 4252396f128cf558efeffcabcff89ceb2d52ee90
+  frontend: 25d76a7f73fc9a898b32df137bf4fd2262329af5
   property-service: f1b74c57b968c3e35059f2825c1fe0e8ecc8b63d
   booking-service: af91cc60b5b3876a5d1c8d75e74874ca90956f89
   ai-service: f8602b1b1d0ffb1e3a333525b182efe49269b626
