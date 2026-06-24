@@ -18,6 +18,7 @@ releaseVersion: "v1.2.1"
 imageTags:
   user-service: 4252396f128cf558efeffcabcff89ceb2d52ee90
   frontend: 4252396f128cf558efeffcabcff89ceb2d52ee90
+  ai-service: f8602b1b1d0ffb1e3a333525b182efe49269b626
 # Single replica per service (cost). On a paid plan, bump to 2 for HA anytime.
 replicaCount: 1
 hpa:
